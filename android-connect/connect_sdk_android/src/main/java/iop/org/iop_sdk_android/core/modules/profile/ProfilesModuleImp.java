@@ -8,6 +8,7 @@ import org.libertaria.world.global.IntentMessage;
 import org.libertaria.world.global.PlatformSerializer;
 import org.libertaria.world.global.SystemContext;
 import org.libertaria.world.global.Version;
+import org.libertaria.world.locnet.NodeInfo;
 import org.libertaria.world.profile_server.CantConnectException;
 import org.libertaria.world.profile_server.CantSendMessageException;
 import org.libertaria.world.profile_server.ProfileInformation;
@@ -152,6 +153,16 @@ public class ProfilesModuleImp extends AbstractModule implements ProfilesModule,
         profile = ioPConnect.createProfile(profile);
         //connectService.setProfile(profile);
         return profile.getHexPublicKey();
+    }
+
+    //TODO:Fmarcano check if we only use a single method that returns all the nodes or by location
+    public List<NodeInfo> getProfileServersAll() throws Exception {
+        return ioPConnect.getProfileServers(4.71933f, -74.03649f,10000, 10 );
+    }
+
+    //TODO:Fmarcano check if we only use a single method that returns all the nodes or by location
+    public List<NodeInfo> getProfileServers() throws Exception {
+        return ioPConnect.getProfileServers(4.71933f, -74.03649f,10000, 10 );
     }
 
     @Override

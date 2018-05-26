@@ -1,4 +1,4 @@
-package iop.org.iop_sdk_android;
+package org.fermat.redtooth.profile_server;
 
 import org.junit.Test;
 import org.libertaria.world.connection.DeviceNetworkConnection;
@@ -6,6 +6,8 @@ import org.libertaria.world.core.IoPConnect;
 import org.libertaria.world.core.IoPConnectContext;
 import org.libertaria.world.crypto.CryptoWrapper;
 import org.libertaria.world.global.DeviceLocation;
+import org.libertaria.world.global.GpsLocation;
+import org.libertaria.world.locnet.Explorer;
 import org.libertaria.world.locnet.NodeInfo;
 import org.libertaria.world.profile_server.SslContextFactory;
 import org.libertaria.world.profile_server.engine.MessageQueueManager;
@@ -14,24 +16,19 @@ import org.libertaria.world.profiles_manager.PairingRequestsManager;
 import org.libertaria.world.profiles_manager.ProfilesManager;
 
 import java.util.List;
+import java.util.concurrent.FutureTask;
 
-import iop.org.iop_sdk_android.core.modules.profile.ProfilesModuleImp;
-
-import static org.junit.Assert.assertEquals;
-
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
-public class ExampleUnitTest {
-    @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
-    }
+public class ProfileServerTest {
 
     @Test
     public void shouldBeGetListProfileServers() throws Exception {
+
+
+        //        Explorer explorer = new Explorer( NodeInfo.ServiceType.Profile, new GpsLocation(-19.9017f, -43.9642f), 10000, 10 );
+//        FutureTask< List<NodeInfo> > task = new FutureTask<>(explorer);
+//        task.run();
+//        List<NodeInfo> resultNodes = task.get();
+//
         IoPConnectContext contextWrapper = null;
         CryptoWrapper cryptoWrapper = null;
         SslContextFactory sslContextFactory = null;
@@ -51,8 +48,8 @@ public class ExampleUnitTest {
                 deviceLocation,
                 deviceNetworkConnection,
                 messageQueueManager);
-        ProfilesModuleImp profilesModuleImp = new ProfilesModuleImp(null, ioPConnect, null, null);
-        List<NodeInfo> resultNodes =  profilesModuleImp.getProfileServers();
+
+        List<NodeInfo> resultNodes =  ioPConnect.getProfileServers(4.71933f, -74.03649f,10000, 10 );
 
         System.out.println("Found " + resultNodes.size() + " matching nodes");
 

@@ -2,6 +2,7 @@ package org.libertaria.world.services.interfaces;
 
 import org.libertaria.world.exceptions.IncorrectPasswordException;
 import org.libertaria.world.global.Module;
+import org.libertaria.world.locnet.NodeInfo;
 import org.libertaria.world.profile_server.CantConnectException;
 import org.libertaria.world.profile_server.CantSendMessageException;
 import org.libertaria.world.profile_server.ProfileInformation;
@@ -40,6 +41,9 @@ public interface ProfilesModule extends Module {
     void addService(String localProfilePubKey,String name);
 
     boolean isProfileConnectedOrConnecting(String localProfilePubKey);
+
+    public List<NodeInfo> getProfileServersAll() throws Exception;
+    public List<NodeInfo> getProfileServers() throws Exception;
 
     List<ProfileInformation> getKnownProfiles(String localProfilePubKey);
 

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ContactsApp.iml" filepath="$PROJECT_DIR$/ContactsApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/IoP-connect-contacts.iml" filepath="$PROJECT_DIR$/IoP-connect-contacts.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-connect/connect_sdk_android/connect_sdk_android.iml" filepath="$PROJECT_DIR$/android-connect/connect_sdk_android/connect_sdk_android.iml" />
