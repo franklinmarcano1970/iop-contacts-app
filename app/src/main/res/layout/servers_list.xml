@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_conversation"
+    android:paddingTop="10dp"
+    >
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="org.furszy.contacts.ui.home.servers.ServersFragment"
+        android:id="@+id/fragment_servers"
+        android:layout_weight="1"
+        tools:layout="@layout/chat_msg_row" />
+
+    <LinearLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:layout_weight="0.2"
+        android:background="#E8E8E8"
+        android:orientation="horizontal">
+
+
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

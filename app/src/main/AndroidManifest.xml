@@ -43,6 +43,7 @@
         <activity android:name="org.furszy.contacts.RestoreActivity"></activity>
         <activity android:name=".ui.other_profile.OtherProfileActivity" />
         <activity android:name="org.furszy.contacts.CreateProfileActivity" />
+        <activity android:name="org.furszy.contacts.ui.home.servers.ServerListActivity" />
         <activity android:name=".ui.settings.SettingsActivity"></activity>
         <activity android:name=".ui.settings_restore.SettingsRestoreActivity"></activity>
         <activity android:name=".ui.settings_backup.SettingsBackupActivity"></activity>
@@ -63,6 +64,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.chat.contact_list.ChatContactActivity">
 
         </activity>
