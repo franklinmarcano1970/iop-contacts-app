@@ -8,23 +8,19 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import org.furszy.contacts.BaseActivity;
 import org.furszy.contacts.R;
 import org.furszy.contacts.ui.chat.MessagesFragment;
+import org.libertaria.world.locnet.NodeInfo;
 import org.libertaria.world.profile_server.ProfileInformation;
-import org.libertaria.world.profile_server.engine.listeners.ProfSerMsgListener;
-import org.libertaria.world.services.chat.ChatCallClosedException;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,6 +41,7 @@ public class ServerListActivity extends BaseActivity implements View.OnClickList
     private ProfileInformation remoteProfile;
     private MessagesFragment messagesFragment;
     private ExecutorService executor;
+    List<NodeInfo> serversList =null;
 
     private BroadcastReceiver chatReceiver = new BroadcastReceiver() {
         @Override
@@ -72,11 +69,21 @@ public class ServerListActivity extends BaseActivity implements View.OnClickList
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.parseColor("#21619C"));
         }
+
+     /*   try {
+            serversList = profilesModule.getProfileServersAll();
+            System.out.print(serversList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
+
         remotePk = getIntent().getStringExtra(REMOTE_PROFILE_PUB_KEY);
         remoteProfile = profilesModule.getKnownProfile(selectedProfPubKey,remotePk);
         messagesFragment = (MessagesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_servers);
@@ -105,7 +112,9 @@ public class ServerListActivity extends BaseActivity implements View.OnClickList
             public void run() {
                 try {
                     // close chat
-                    chatModule.refuseChatRequest(selectedProfPubKey,remoteProfile.getHexPublicKey());
+                    serversList = profilesModule.getProfileServersAll();
+                    System.out.print(serversList);
+                    //chatModule.refuseChatRequest(selectedProfPubKey,remoteProfile.getHexPublicKey());
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -130,7 +139,9 @@ public class ServerListActivity extends BaseActivity implements View.OnClickList
             public void run() {
                 try {
                     // close chat
-                    chatModule.refuseChatRequest(selectedProfPubKey,remoteProfile.getHexPublicKey());
+                    serversList = profilesModule.getProfileServersAll();
+                    System.out.print(serversList);
+                    //chatModule.refuseChatRequest(selectedProfPubKey,remoteProfile.getHexPublicKey());
                 }catch (Exception e){
                     e.printStackTrace();
                 }

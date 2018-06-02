@@ -1,6 +1,8 @@
 package org.libertaria.world.global;
 
-public class GpsLocation {
+import java.io.Serializable;
+
+public class GpsLocation implements Serializable {
     float latitude;
     float longitude;
 

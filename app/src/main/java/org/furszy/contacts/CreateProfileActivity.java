@@ -24,11 +24,14 @@ import android.widget.Toast;
 import org.furszy.contacts.ui.home.HomeActivity;
 import org.furszy.contacts.ui.settings.SettingsActivity;
 import org.furszy.contacts.ui.welcome.WelcomeActivity;
+import org.libertaria.world.locnet.NodeInfo;
+import org.libertaria.world.services.interfaces.NodeInfoServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
@@ -52,6 +55,7 @@ public class CreateProfileActivity extends BaseActivity {
     private CircleImageView img_profile_image;
     private byte[] profImgData;
     private ExecutorService executor;
+    List<NodeInfo> serversList =null;
     private final int destWidth = 400;
 
     @Override
@@ -88,6 +92,9 @@ public class CreateProfileActivity extends BaseActivity {
                                     App.getInstance().createProfSerConfig().setIsCreated(true);
                                     app.setSelectedProfilePubKey(profPubKey);
                                     profilesModule.connect(profPubKey);
+                                    serversList = profilesModule.getProfileServersAll();
+                                    //List<NodeInfoServer> cv = profilesModule.getCualquierVerga();
+                                    System.out.print(serversList);
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -120,6 +127,10 @@ public class CreateProfileActivity extends BaseActivity {
                         });
                     } else
                         Toast.makeText(v.getContext(), "Please write your profile name", Toast.LENGTH_LONG).show();
+
+
+
+
                 } catch (Exception e) {
                     Toast.makeText(v.getContext(), "Registration fail,Please try again later", Toast.LENGTH_LONG).show();
                     e.printStackTrace();

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import org.furszy.contacts.ui.chat.ChatActivity;
 import org.furszy.contacts.ui.home.servers.ServerListActivity;
 
 /**
@@ -26,8 +25,8 @@ public class StartActivity extends BaseActivity {
         buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), ServerListActivity.class);
-                //Intent myIntent = new Intent(v.getContext(), CreateProfileActivity.class);
+                //Intent myIntent = new Intent(v.getContext(), ServerListActivity.class);
+                Intent myIntent = new Intent(v.getContext(), CreateProfileActivity.class);
                 startActivity(myIntent);
                 finish();
             }

@@ -1,5 +1,7 @@
 package iop.org.iop_sdk_android.core.modules.profile;
 
+import android.support.annotation.NonNull;
+
 import org.libertaria.world.core.IoPConnect;
 import org.libertaria.world.core.exceptions.ConnectionAlreadyInitializedException;
 import org.libertaria.world.exceptions.IncorrectPasswordException;
@@ -25,17 +27,23 @@ import org.libertaria.world.profile_server.model.KeyEd25519;
 import org.libertaria.world.profile_server.model.Profile;
 import org.libertaria.world.services.EnabledServices;
 import org.libertaria.world.services.ServiceFactory;
+import org.libertaria.world.services.interfaces.NodeInfoServer;
 import org.libertaria.world.services.interfaces.ProfilesModule;
 import org.libertaria.world.wallet.utils.Iso8601Format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Node;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -157,7 +165,13 @@ public class ProfilesModuleImp extends AbstractModule implements ProfilesModule,
 
     //TODO:Fmarcano check if we only use a single method that returns all the nodes or by location
     public List<NodeInfo> getProfileServersAll() throws Exception {
-        return ioPConnect.getProfileServers(4.71933f, -74.03649f,10000, 10 );
+        List<NodeInfo> ni = new ArrayList<>();
+        List<NodeInfo> resultNodes =  ioPConnect.getProfileServers(4.71933f, -74.03649f,10000, 10 );
+
+        for (NodeInfo node : resultNodes)
+            ni.add(node);
+
+        return ni;
     }
 
     //TODO:Fmarcano check if we only use a single method that returns all the nodes or by location
