@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.furszy.contacts.CreateProfileActivity;
 import org.furszy.contacts.ProfileInformationActivity;
 import org.furszy.contacts.R;
 import org.furszy.contacts.app_base.BaseAppRecyclerFragment;
 import org.furszy.contacts.contacts.ProfileAdapter;
+import org.libertaria.world.locnet.NodeInfo;
 import org.libertaria.world.profile_server.ProfileInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,7 @@ import tech.furszy.ui.lib.base.adapter.RecyclerListItemListeners;
 import static world.libertaria.shared.library.global.client.IntentBroadcastConstants.INTENT_EXTRA_PROF_KEY;
 
 
-public class ServersFragment extends BaseAppRecyclerFragment<ProfileInformation> {
+public class ServersFragment extends BaseAppRecyclerFragment<NodeInfo> {
 
     private static final Logger log = LoggerFactory.getLogger(ServersFragment.class);
 
@@ -39,16 +41,16 @@ public class ServersFragment extends BaseAppRecyclerFragment<ProfileInformation>
 
     @Override
     protected BaseAdapter initAdapter() {
-        return new ProfileAdapter(getActivity(),new RecyclerListItemListeners<ProfileInformation>() {
+        return new ServerListAdapter(getActivity(),new RecyclerListItemListeners<NodeInfo>() {
             @Override
-            public void onItemClickListener(ProfileInformation data, int position) {
-                Intent intent1 = new Intent(getActivity(), ProfileInformationActivity.class);
-                intent1.putExtra(INTENT_EXTRA_PROF_KEY, data.getPublicKey());
+            public void onItemClickListener(NodeInfo data, int position) {
+               Intent intent1 = new Intent(getActivity(), CreateProfileActivity.class);
+                intent1.putExtra(INTENT_EXTRA_PROF_KEY, selectedProfilePubKey);
                 getActivity().startActivity(intent1);
             }
 
             @Override
-            public void onLongItemClickListener(ProfileInformation data, int position) {
+            public void onLongItemClickListener(NodeInfo data, int position) {
 
             }
         });
@@ -58,12 +60,13 @@ public class ServersFragment extends BaseAppRecyclerFragment<ProfileInformation>
     protected List onLoading() {
         try {
             if (profilesModule!=null)
-                return profilesModule.getKnownProfiles(selectedProfilePubKey);
-            else {
+                return profilesModule.getProfileServersAll();
+            //return profilesModule.getKnownProfiles(selectedProfilePubKey);
+           /* else {
                 loadBasics();
                 TimeUnit.SECONDS.sleep(1);
                 onLoading();
-            }
+            }*/
         }catch (Exception e){
             log.info("onLoading",e);
         }

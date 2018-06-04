@@ -49,7 +49,7 @@ public class ProfileServerTest {
                 deviceNetworkConnection,
                 messageQueueManager);
 
-        List<NodeInfo> resultNodes =  ioPConnect.getProfileServers(4.71933f, -74.03649f,10000, 10 );
+        List<NodeInfo> resultNodes =  ioPConnect.getProfileServers(4.71933f, -74.03649f,1000, 10 );
 
         System.out.println("Found " + resultNodes.size() + " matching nodes");
 

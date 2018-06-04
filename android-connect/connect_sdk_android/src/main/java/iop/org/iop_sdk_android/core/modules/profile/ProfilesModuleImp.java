@@ -27,7 +27,6 @@ import org.libertaria.world.profile_server.model.KeyEd25519;
 import org.libertaria.world.profile_server.model.Profile;
 import org.libertaria.world.services.EnabledServices;
 import org.libertaria.world.services.ServiceFactory;
-import org.libertaria.world.services.interfaces.NodeInfoServer;
 import org.libertaria.world.services.interfaces.ProfilesModule;
 import org.libertaria.world.wallet.utils.Iso8601Format;
 import org.slf4j.Logger;

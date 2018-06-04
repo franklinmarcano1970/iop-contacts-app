@@ -25,7 +25,6 @@ import org.furszy.contacts.ui.home.HomeActivity;
 import org.furszy.contacts.ui.settings.SettingsActivity;
 import org.furszy.contacts.ui.welcome.WelcomeActivity;
 import org.libertaria.world.locnet.NodeInfo;
-import org.libertaria.world.services.interfaces.NodeInfoServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,7 +92,6 @@ public class CreateProfileActivity extends BaseActivity {
                                     app.setSelectedProfilePubKey(profPubKey);
                                     profilesModule.connect(profPubKey);
                                     serversList = profilesModule.getProfileServersAll();
-                                    //List<NodeInfoServer> cv = profilesModule.getCualquierVerga();
                                     System.out.print(serversList);
                                     runOnUiThread(new Runnable() {
                                         @Override

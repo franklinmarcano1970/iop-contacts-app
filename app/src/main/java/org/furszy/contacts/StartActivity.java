@@ -25,8 +25,8 @@ public class StartActivity extends BaseActivity {
         buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent myIntent = new Intent(v.getContext(), ServerListActivity.class);
-                Intent myIntent = new Intent(v.getContext(), CreateProfileActivity.class);
+                Intent myIntent = new Intent(v.getContext(), ServerListActivity.class);
+                //Intent myIntent = new Intent(v.getContext(), CreateProfileActivity.class);
                 startActivity(myIntent);
                 finish();
             }
