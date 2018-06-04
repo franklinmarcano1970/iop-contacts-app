@@ -4,156 +4,166 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Toast;
 
-import org.furszy.contacts.BaseActivity;
+import org.furszy.contacts.App;
+import org.furszy.contacts.BaseDrawerActivity;
 import org.furszy.contacts.R;
-import org.furszy.contacts.ui.chat.MessagesFragment;
-import org.libertaria.world.locnet.NodeInfo;
-import org.libertaria.world.profile_server.ProfileInformation;
+import org.furszy.contacts.StartActivity;
+import org.furszy.contacts.app_base.BaseAppRecyclerFragment;
+import org.furszy.contacts.ui.home.contacts.ContactsFragment;
+import org.furszy.contacts.ui.home.requests.RequestsFragment;
+import org.furszy.contacts.ui.send_request.SendRequestActivity;
 
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.HashMap;
+import java.util.Map;
 
-import static org.furszy.contacts.App.INTENT_CHAT_REFUSED_BROADCAST;
-import static org.furszy.contacts.ui.chat.WaitingChatActivity.REMOTE_PROFILE_PUB_KEY;
-import static world.libertaria.shared.library.services.chat.ChatIntentsConstants.ACTION_ON_CHAT_DISCONNECTED;
-import static world.libertaria.shared.library.services.chat.ChatIntentsConstants.EXTRA_INTENT_DETAIL;
+import static org.furszy.contacts.App.INTENT_ACTION_ON_SERVICE_CONNECTED;
+import static world.libertaria.shared.library.util.OpenApplicationsUtil.CONTACTS_POSITION;
+import static world.libertaria.shared.library.util.OpenApplicationsUtil.INITIAL_FRAGMENT_EXTRA;
+import static world.libertaria.shared.library.util.OpenApplicationsUtil.REQUESTS_POSITION;
 
 /**
- * Created by furszy on 7/3/17.
+ * Created by furszy on 6/20/17.
  */
 
-public class ServerListActivity extends BaseActivity implements View.OnClickListener {
+public class ServerListActivity extends BaseDrawerActivity {
+
+    public static final String INIT_REQUESTS = "in_req";
+    public static final String FRAGMENT_CONTACTS = "servers";
+    public static final String FRAGMENT_REQUESTS = "requests";
+
 
     private View root;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private FloatingActionButton fab_add;
+    private ViewPagerAdapter adapter;
 
-    private String remotePk;
-    private ProfileInformation remoteProfile;
-    private MessagesFragment messagesFragment;
-    private ExecutorService executor;
-    List<NodeInfo> serversList =null;
+    private boolean initInRequest;
 
-    private BroadcastReceiver chatReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver initReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if(action.equals(INTENT_CHAT_REFUSED_BROADCAST)){
-                Toast.makeText(ServerListActivity.this,"Chat closed",Toast.LENGTH_LONG).show();
-                onBackPressed();
-            }else if (action.equals(ACTION_ON_CHAT_DISCONNECTED)){
-                String remotePubKey = intent.getStringExtra(REMOTE_PROFILE_PUB_KEY);
-                String reason = intent.getStringExtra(EXTRA_INTENT_DETAIL);
-                if (remotePk.equals(remotePubKey)){
-                    Toast.makeText(ServerListActivity.this,"Chat disconnected",Toast.LENGTH_LONG).show();
-                    onBackPressed();
-                }
+            if (intent.getAction().equals(INTENT_ACTION_ON_SERVICE_CONNECTED)) {
+                loadBasics();
+                refreshFragments();
             }
         }
     };
 
-    @Override
-    protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        super.onCreateView(savedInstanceState, container);
-        root = getLayoutInflater().inflate(R.layout.servers_fragment,container);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#21619C")));
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.parseColor("#21619C"));
+    private void refreshFragments() {
+        if (adapter != null) {
+            refreshServers();
+            //refreshRequests();
         }
-
-     /*   try {
-            serversList = profilesModule.getProfileServersAll();
-            System.out.print(serversList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
-
-        remotePk = getIntent().getStringExtra(REMOTE_PROFILE_PUB_KEY);
-        remoteProfile = profilesModule.getKnownProfile(selectedProfPubKey,remotePk);
-        messagesFragment = (MessagesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_servers);
-
-        // cancel chat notifications if there is any..
-        app.cancelChatNotifications();
-
-        localBroadcastManager.registerReceiver(chatReceiver,new IntentFilter(INTENT_CHAT_REFUSED_BROADCAST));
-        localBroadcastManager.registerReceiver(chatReceiver,new IntentFilter(ACTION_ON_CHAT_DISCONNECTED));
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (executor==null){
-            executor = Executors.newSingleThreadExecutor();
+    protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
+
+            root = getLayoutInflater().inflate(R.layout.servers_main, container);
+            setTitle("IoP Connections");
+
+            if (getIntent() != null) {
+                if (getIntent().hasExtra(INIT_REQUESTS)) {
+                    initInRequest = true;
+                }
+            }
+
+            viewPager = (ViewPager) root.findViewById(R.id.viewpager);
+            setupViewPager(viewPager);
+            tabLayout = (TabLayout) root.findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(viewPager);
+            fab_add = (FloatingActionButton) root.findViewById(R.id.fab_add);
+            fab_add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(v.getContext(), SendRequestActivity.class));
+                }
+            });
+
+        localBroadcastManager.registerReceiver(initReceiver, new IntentFilter(INTENT_ACTION_ON_SERVICE_CONNECTED));
+
+        if (viewPager != null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                int initialFragment = extras.getInt(INITIAL_FRAGMENT_EXTRA);
+                viewPager.setCurrentItem(initialFragment);
+            }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // to check current activity in the navigation drawer
+        setNavigationMenuItemChecked(0);
+        if (initInRequest) {
+            viewPager.setCurrentItem(1);
+            initInRequest = false;
+        }
+        localBroadcastManager.registerReceiver(initReceiver, new IntentFilter(INTENT_ACTION_ON_SERVICE_CONNECTED));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        localBroadcastManager.unregisterReceiver(initReceiver);
+    }
 
-        executor.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // close chat
-                    serversList = profilesModule.getProfileServersAll();
-                    System.out.print(serversList);
-                    //chatModule.refuseChatRequest(selectedProfPubKey,remoteProfile.getHexPublicKey());
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
+    private void setupViewPager(ViewPager viewPager) {
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(CONTACTS_POSITION, new ServersFragment(), FRAGMENT_CONTACTS);
+        //adapter.addFragment(REQUESTS_POSITION, new RequestsFragment(), FRAGMENT_REQUESTS);
+        viewPager.setAdapter(adapter);
+    }
 
-        if (executor!=null){
-            if (!executor.isShutdown())
-                executor.shutdown();
-            executor = null;
+    public class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final Map<Integer, Pair<String, Fragment>> fragments = new HashMap<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
         }
 
-        localBroadcastManager.unregisterReceiver(chatReceiver);
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position).second;
+        }
 
-        finish();
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        public void addFragment(Integer position, Fragment fragment, String title) {
+            fragments.put(position, new Pair<>(title, fragment));
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragments.get(position).first;
+        }
     }
 
-    @Override
-    public void onBackPressed() {
-        executor.submit(new Runnable() {
+    public void refreshServers() {
+        final Fragment fragment = adapter.getItem(CONTACTS_POSITION);
+        ((BaseAppRecyclerFragment) fragment).loadBasics();
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    // close chat
-                    serversList = profilesModule.getProfileServersAll();
-                    System.out.print(serversList);
-                    //chatModule.refuseChatRequest(selectedProfPubKey,remoteProfile.getHexPublicKey());
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                ((ServersFragment) fragment).refresh();
             }
         });
-        super.onBackPressed();
-    }
-
-    @Override
-    public void onClick(final View v) {
-        int id = v.getId();
-
     }
 
 }

@@ -17,6 +17,7 @@ import org.libertaria.world.profile_server.ProfileInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -58,9 +59,11 @@ public class ServersFragment extends BaseAppRecyclerFragment<NodeInfo> {
 
     @Override
     protected List onLoading() {
+        List<NodeInfo> ni = new ArrayList<>();
+        ni = null;
         try {
             if (profilesModule!=null)
-                return profilesModule.getProfileServersAll();
+                ni= profilesModule.getProfileServersAll();
             //return profilesModule.getKnownProfiles(selectedProfilePubKey);
            /* else {
                 loadBasics();
@@ -70,7 +73,7 @@ public class ServersFragment extends BaseAppRecyclerFragment<NodeInfo> {
         }catch (Exception e){
             log.info("onLoading",e);
         }
-        return null;
+        return ni;
     }
 
 
