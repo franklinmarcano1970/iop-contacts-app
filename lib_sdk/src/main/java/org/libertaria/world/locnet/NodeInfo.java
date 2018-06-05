@@ -2,15 +2,16 @@ package org.libertaria.world.locnet;
 
 import org.libertaria.world.global.GpsLocation;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.List;
 
 
 
-public class NodeInfo
+public class NodeInfo implements Serializable
 {
 
-    public static class Contact
+    public static class Contact implements Serializable
     {
         InetAddress address;
         int         port;
@@ -42,7 +43,7 @@ public class NodeInfo
         Minting,
     }
 
-    public static class ServiceInfo
+    public static class ServiceInfo implements Serializable
     {
         ServiceType type;
         int         port;

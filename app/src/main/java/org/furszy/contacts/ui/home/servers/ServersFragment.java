@@ -59,11 +59,11 @@ public class ServersFragment extends BaseAppRecyclerFragment<NodeInfo> {
 
     @Override
     protected List onLoading() {
-        List<NodeInfo> ni = new ArrayList<>();
-        ni = null;
+        List<NodeInfo> ni = null;
+        //ni = null;
         try {
             if (profilesModule!=null)
-                ni= profilesModule.getProfileServersAll();
+                return profilesModule.getProfileServersAll();
             //return profilesModule.getKnownProfiles(selectedProfilePubKey);
            /* else {
                 loadBasics();
@@ -73,7 +73,7 @@ public class ServersFragment extends BaseAppRecyclerFragment<NodeInfo> {
         }catch (Exception e){
             log.info("onLoading",e);
         }
-        return ni;
+        return null;
     }
 
 
