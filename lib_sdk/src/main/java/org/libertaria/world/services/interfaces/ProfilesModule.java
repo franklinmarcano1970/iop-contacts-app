@@ -23,13 +23,13 @@ import java.util.List;
 
 public interface ProfilesModule extends Module {
 
-    String registerProfile(String name,String type, byte[] img, int latitude, int longitude, String extraData) throws Exception;
+    String registerProfile(String name,String type, byte[] img, int latitude, int longitude, String extraData, NodeInfo nodeinfo) throws Exception;
 
     File backupProfile(String localProfPubKey,File backupDir, String password) throws IOException;
 
     void scheduleBackupProfileFile(Profile profile, File backupDir, String password);
 
-    String registerProfile(String name, byte[] img) throws Exception;
+    String registerProfile(String name, byte[] img, NodeInfo nodeinfo) throws Exception;
 
     void connect(String pubKey) throws Exception;
 

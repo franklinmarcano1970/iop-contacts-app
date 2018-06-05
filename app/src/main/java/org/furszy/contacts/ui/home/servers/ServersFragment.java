@@ -66,7 +66,6 @@ public class ServersFragment extends BaseAppRecyclerFragment<NodeInfo> {
         ni = null;
         try {
             if (profilesModule!=null){
-                ni= profilesModule.getProfileServersAll();
                 return profilesModule.getProfileServersAll();
             }
             //return profilesModule.getKnownProfiles(selectedProfilePubKey);
