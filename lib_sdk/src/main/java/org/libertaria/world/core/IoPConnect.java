@@ -279,7 +279,7 @@ public class IoPConnect implements ConnectionListener {
      * @param secretPassword        -> encription password for the profile keys
      * @return profile pubKey
      */
-    public Profile createProfile(byte[] profileOwnerChallenge, String name, String type, byte[] img, String extraData, String secretPassword) {
+    public Profile createProfile(byte[] profileOwnerChallenge, String name, String type, byte[] img, String extraData, String secretPassword, NodeInfo nodeinfo) {
         Version version = new Version((byte) 1, (byte) 0, (byte) 0);
         ProfileServerConfigurations profileServerConfigurations = createEmptyProfileServerConf();
         KeyEd25519 keyEd25519 = profileServerConfigurations.createNewUserKeys();

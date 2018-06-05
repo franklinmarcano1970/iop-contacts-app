@@ -116,11 +116,11 @@ public class ProfilesModuleImp extends AbstractModule implements ProfilesModule,
     };
 
     @Override
-    public String registerProfile(String name, String type, byte[] img, int latitude, int longitude, String extraData) throws Exception {
+    public String registerProfile(String name, String type, byte[] img, int latitude, int longitude, String extraData, NodeInfo nodeinfo) throws Exception {
         if (img != null) {
             img = ImageUtils.compressJpeg(img, 20480);
         }
-        Profile profile = ioPConnect.createProfile(null, name, type, img, extraData, null);
+        Profile profile = ioPConnect.createProfile(null, name, type, img, extraData, null, nodeinfo);
         // just for now..
         //connectService.setProfile(profile);
         return profile.getHexPublicKey();
@@ -152,8 +152,8 @@ public class ProfilesModuleImp extends AbstractModule implements ProfilesModule,
     }
 
     @Override
-    public String registerProfile(String name, byte[] img) throws Exception {
-        return registerProfile(name, "IoP-contacts", img, 0, 0, null);
+    public String registerProfile(String name, byte[] img, NodeInfo nodeinfo) throws Exception {
+        return registerProfile(name, "IoP-contacts", img, 0, 0, null, nodeinfo);
     }
 
     public String registerProfile(Profile profile) {
@@ -175,7 +175,7 @@ public class ProfilesModuleImp extends AbstractModule implements ProfilesModule,
 
     //TODO:Fmarcano check if we only use a single method that returns all the nodes or by location
     public List<NodeInfo> getProfileServers() throws Exception {
-        return ioPConnect.getProfileServers(4.71933f, -74.03649f,10000, 10 );
+        return ioPConnect.getProfileServers(4.71933f, -74.03649f,1000, 10 );
     }
 
     @Override
