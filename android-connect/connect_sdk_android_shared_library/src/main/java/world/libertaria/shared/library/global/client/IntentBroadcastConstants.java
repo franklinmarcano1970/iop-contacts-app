@@ -24,6 +24,7 @@ public class IntentBroadcastConstants {
     public static final String INTENT_EXTRA_PROF_KEY = "prof_key"; // -> string value
     public static final String INTENT_EXTRA_PROF_NAME = "prof_name"; // -> string valiue
     public static final String INTENT_RESPONSE_DETAIL = "response_detail";
+    public static final String INTENT_EXTRA_NODE_INFO = "node_info";
 
 
 }
