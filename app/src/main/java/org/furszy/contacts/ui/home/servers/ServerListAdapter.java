@@ -14,7 +14,7 @@ import tech.furszy.ui.lib.base.adapter.BaseAdapter;
 import tech.furszy.ui.lib.base.adapter.RecyclerListItemListeners;
 
 /**
- * Created by mati on 03/03/17.
+ * Created by jcardozo on 6/4/17.
  */
 public class ServerListAdapter extends BaseAdapter<NodeInfo, ServerListHolder> {
 
@@ -34,7 +34,7 @@ public class ServerListAdapter extends BaseAdapter<NodeInfo, ServerListHolder> {
 
     @Override
     protected int getCardViewResource(int type) {
-        return R.layout.my_contacts_row;
+        return R.layout.server_row;
     }
 
     @Override

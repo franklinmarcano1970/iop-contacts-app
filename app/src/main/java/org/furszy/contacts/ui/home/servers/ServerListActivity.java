@@ -33,7 +33,7 @@ import static world.libertaria.shared.library.util.OpenApplicationsUtil.INITIAL_
 import static world.libertaria.shared.library.util.OpenApplicationsUtil.REQUESTS_POSITION;
 
 /**
- * Created by furszy on 6/20/17.
+ * Created by jcardozo on 6/4/17.
  */
 
 public class ServerListActivity extends BaseDrawerActivity {

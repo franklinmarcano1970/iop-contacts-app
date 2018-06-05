@@ -164,7 +164,7 @@ public class ProfilesModuleImp extends AbstractModule implements ProfilesModule,
 
     //TODO:Fmarcano check if we only use a single method that returns all the nodes or by location
     public List<NodeInfo> getProfileServersAll() throws Exception {
-        List<NodeInfo> ni = new ArrayList<>();
+        ArrayList<NodeInfo> ni = new ArrayList<>();
         List<NodeInfo> resultNodes =  ioPConnect.getProfileServers(4.71933f, -74.03649f,10000, 10 );
 
         for (NodeInfo node : resultNodes)
