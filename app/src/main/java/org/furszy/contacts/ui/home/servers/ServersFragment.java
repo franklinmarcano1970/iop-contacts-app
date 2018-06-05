@@ -51,14 +51,10 @@ public class ServersFragment extends BaseAppRecyclerFragment<NodeInfo> {
             public void onItemClickListener(NodeInfo data, int position) {
                Intent intent1 = new Intent(getActivity(), CreateProfileActivity.class);
                 intent1.putExtra(INTENT_EXTRA_PROF_KEY, selectedProfilePubKey);
-
-
                 Bundle b = new Bundle();
-               // b.putParcelable(INTENT_EXTRA_NODE_INFO, data);
+                b.putSerializable(INTENT_EXTRA_NODE_INFO, data);
                 intent1.putExtras(b);
                 //i.setClass(this, SearchDetailsActivity.class);
-
-
                 getActivity().startActivity(intent1);
             }
 
