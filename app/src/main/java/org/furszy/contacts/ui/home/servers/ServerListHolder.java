@@ -9,7 +9,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import tech.furszy.ui.lib.base.adapter.BaseViewHolder;
 
 /**
- * Created by mati on 03/03/17.
+ * Created by jcardozo on 6/4/17.
  */
 public class ServerListHolder extends BaseViewHolder {
 

@@ -26,6 +26,9 @@ import tech.furszy.ui.lib.base.adapter.RecyclerListItemListeners;
 
 import static world.libertaria.shared.library.global.client.IntentBroadcastConstants.INTENT_EXTRA_PROF_KEY;
 
+/**
+ * Created by jcardozo on 6/4/17.
+ */
 
 public class ServersFragment extends BaseAppRecyclerFragment<NodeInfo> {
 
@@ -59,11 +62,13 @@ public class ServersFragment extends BaseAppRecyclerFragment<NodeInfo> {
 
     @Override
     protected List onLoading() {
-        List<NodeInfo> ni = null;
-        //ni = null;
+        List<NodeInfo> ni = new ArrayList<>();
+        ni = null;
         try {
-            if (profilesModule!=null)
+            if (profilesModule!=null){
+                ni= profilesModule.getProfileServersAll();
                 return profilesModule.getProfileServersAll();
+            }
             //return profilesModule.getKnownProfiles(selectedProfilePubKey);
            /* else {
                 loadBasics();

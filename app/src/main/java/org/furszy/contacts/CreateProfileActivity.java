@@ -91,8 +91,6 @@ public class CreateProfileActivity extends BaseActivity {
                                     App.getInstance().createProfSerConfig().setIsCreated(true);
                                     app.setSelectedProfilePubKey(profPubKey);
                                     profilesModule.connect(profPubKey);
-                                    serversList = profilesModule.getProfileServersAll();
-                                    System.out.print(serversList);
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
