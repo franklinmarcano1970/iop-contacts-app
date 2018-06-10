@@ -82,13 +82,13 @@ public class ServerListActivity extends BaseDrawerActivity {
 
             viewPager = (ViewPager) root.findViewById(R.id.viewpager);
             setupViewPager(viewPager);
-            tabLayout = (TabLayout) root.findViewById(R.id.tabs);
-            tabLayout.setupWithViewPager(viewPager);
+           /* tabLayout = (TabLayout) root.findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(viewPager);*/
             fab_add = (FloatingActionButton) root.findViewById(R.id.fab_add);
             fab_add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(v.getContext(), SendRequestActivity.class));
+                    startActivity(new Intent(v.getContext(), ReadServerActivity.class));
                 }
             });
 
@@ -124,7 +124,7 @@ public class ServerListActivity extends BaseDrawerActivity {
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(CONTACTS_POSITION, new ServersFragment(), FRAGMENT_CONTACTS);
-        //adapter.addFragment(REQUESTS_POSITION, new RequestsFragment(), FRAGMENT_REQUESTS);
+        adapter.addFragment(REQUESTS_POSITION, new RequestsFragment(), FRAGMENT_REQUESTS);
         viewPager.setAdapter(adapter);
     }
 
