@@ -73,12 +73,6 @@ public class ServersFragment extends BaseAppRecyclerFragment<NodeInfo> {
             if (profilesModule!=null){
                 return profilesModule.getProfileServersAll();
             }
-            //return profilesModule.getKnownProfiles(selectedProfilePubKey);
-           /* else {
-                loadBasics();
-                TimeUnit.SECONDS.sleep(1);
-                onLoading();
-            }*/
         }catch (Exception e){
             log.info("onLoading",e);
         }

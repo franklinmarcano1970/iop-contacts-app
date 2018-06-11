@@ -88,7 +88,7 @@ public class CreateProfileActivity extends BaseActivity {
                                 try {
                                     //todo: make this connect non blocking.
                                     Bundle bundle = getIntent().getExtras();
-                                    NodeInfo nodeInfo = (NodeInfo)bundle.getSerializable("INTENT_EXTRA_NODE_INFO");
+                                    NodeInfo nodeInfo = (NodeInfo)bundle.getSerializable("node_info");
                                     String profPubKey = profilesModule.registerProfile(name, profImgData, nodeInfo);
                                     App.getInstance().createProfSerConfig().setIsCreated(true);
                                     app.setSelectedProfilePubKey(profPubKey);

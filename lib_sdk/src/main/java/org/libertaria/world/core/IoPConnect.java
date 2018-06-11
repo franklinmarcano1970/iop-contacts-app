@@ -296,11 +296,15 @@ public class IoPConnect implements ConnectionListener {
         // save
         profileServerConfigurations.saveUserKeys(profile.getKey());
         profileServerConfigurations.setIsCreated(true);
+        profile.setHomeHost(nodeinfo.getContact().getAddress().toString());
+        profileServerConfigurations.setMainPsPrimaryPort(nodeinfo.getContact().getPort());
+        ProfServerData profServerData = new ProfServerData(nodeinfo.getNodeId(), nodeinfo.getContact().getAddress().toString(), nodeinfo.getContact().getPort(), nodeinfo.getLocation().getLatitude(), nodeinfo.getLocation().getLatitude());
+        profileServerConfigurations.saveMainProfileServer(profServerData);
         // save profile
         profileServerConfigurations.saveProfile(profile);
 
         // profile basic services
-        //setupProfile(profile,profileServerConfigurations);
+        setupProfile(profile,profileServerConfigurations);
 
 
         // start moving this to the db

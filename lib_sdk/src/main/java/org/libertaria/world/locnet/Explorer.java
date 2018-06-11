@@ -20,7 +20,9 @@ public class Explorer implements Callable<List<NodeInfo>>{
 //        "ham5.fermat.cloud",
 //        "ham6.fermat.cloud",
 //        "ham7.fermat.cloud"
-        "192.168.0.20"
+// is there any DNS to use in order
+// to avoid to use internal IPs?
+                        "loc1.iop-project.com", "loc2.iop-project.com", "loc3.iop-project.com"
     );
 
 
